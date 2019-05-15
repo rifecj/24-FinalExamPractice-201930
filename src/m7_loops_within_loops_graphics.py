@@ -6,8 +6,8 @@ This problem provides practice at:
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Chloe Rife.
+"""  # done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 ###############################################################################
 # Students:
@@ -30,11 +30,12 @@ Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
 ###############################################################################
 
 import rosegraphics as rg
+import math
 
 
 def main():
     """ Calls the   TEST   functions in this module. """
-    run_test_hourglass()
+    #run_test_hourglass()
     run_test_many_hourglasses()
 
 
@@ -90,7 +91,7 @@ def hourglass(window, n, point, radius, color):
     a color that rosegraphics understands.
     """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # done: 2. Implement and test this function.
     #       We provided some tests for you (above).
     # -------------------------------------------------------------------------
     ###########################################################################
@@ -102,6 +103,46 @@ def hourglass(window, n, point, radius, color):
     #    DIFFICULTY:      8
     #    TIME ESTIMATE:  25 minutes (warning: this problem is challenging)
     # -------------------------------------------------------------------------
+    mid_cir=rg.Circle(point,radius)
+    mid_cir.fill_color=color
+    mid_line=rg.Line(rg.Point(point.x-radius,point.y),rg.Point(point.x+radius,point.y))
+    mid_line.attach_to(window)
+
+
+    delta = 2 * radius*math.sin(60 * math.pi / 180)
+    diam=2*radius
+
+    for row in range(n):
+        new_mid_start1=rg.Point(point.x-radius*row,point.y+delta*row)
+        new_mid_start2 = rg.Point(point.x - radius * row, point.y - delta * row)
+        for col in range(row+1):
+            cir = mid_cir.clone()
+            cir.fill_color = mid_cir.fill_color
+            cir.move_center_to(new_mid_start1.x+diam*(col), new_mid_start1.y)
+            cir.attach_to(window)
+
+            cir = mid_cir.clone()
+            cir.fill_color = mid_cir.fill_color
+            cir.move_center_to(new_mid_start2.x + diam * (col), new_mid_start2.y)
+            cir.attach_to(window)
+
+    for row in range(n):
+        line1 = mid_line.clone()
+        line1.move_by(-radius * row, delta * row)
+        line1.attach_to(window)
+
+        line2 = mid_line.clone()
+        line2.move_by(-radius * row, -delta * row)
+        line2.attach_to(window)
+        for col in range(row + 1):
+            line1_n=line1.clone()
+            line1_n.move_by(diam*col,0)
+            line1_n.attach_to(window)
+
+            line2_n = line2.clone()
+            line2_n.move_by(diam * col, 0)
+            line2_n.attach_to(window)
+    window.render()
 
 
 def run_test_many_hourglasses():
@@ -180,6 +221,28 @@ def many_hourglasses(window, square, m, colors):
     #                         a correct "hourglass" function above)
     #    TIME ESTIMATE:  20 minutes (warning: this problem is challenging)
     # -------------------------------------------------------------------------
+    radius=square.length_of_each_side/2
+
+    rect=0
+    center = rg.Point(square.center.x, square.center.y)
+    hourglass(window, rect+1, center, radius, colors[rect])
+    rectangle = rg.Rectangle(rg.Point(square.center.x - radius, square.center.y - radius),
+                             rg.Point(square.center.x + radius, square.center.y + radius))
+    rectangle.attach_to(window)
+    window.render(.5)
+    rectangles=[0,rectangle]
+
+    for rect in range(2,m+1):
+        center.move_by(radius*(rect+rect-1),0)
+        hourglass(window,rect,center,radius,colors[rect-1])
+
+        rectangles=rectangles+[rectangles[rect-1].clone()]
+        print(type(rectangles[rect]))
+        rectangles[rect].corner_1.move_by(radius*(rect+rect-1)-radius,-2*radius)
+        rectangles[rect].corner_2.move_by(radius * (2*rect-1)+radius, 2 * radius)
+        rectangles[rect].attach_to(window)
+        window.render(.5)
+    # for rect in range(m):
 
 
 # -----------------------------------------------------------------------------
