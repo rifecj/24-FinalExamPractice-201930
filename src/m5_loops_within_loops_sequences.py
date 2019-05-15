@@ -142,7 +142,7 @@ def integers(sequence_of_sequences):
 def run_test_big_letters():
     """ Tests the    big_letters    function. """
     # -------------------------------------------------------------------------
-    # TODO: 4. Implement this TEST function.
+    # done: 4. Implement this TEST function.
     #   It TESTS the  big_letters  function defined below.
     #   Include at least ** 1 ** ADDITIONAL test beyond those we wrote.
     # -------------------------------------------------------------------------
@@ -178,6 +178,20 @@ def run_test_big_letters():
     print('Expected is:', expected)
     print('Actual is:  ', answer)
 
+    # Test 2:
+    expected = 'WOOLIENOWNAAAAAAAHA'
+    answer = big_letters([(3, 1, 4),  # not a string
+                        'hoW dO yOu LIkE me NOW',            # WOOLIENOW
+                        ('shhh',64, 'HI'),                   # not a string
+                        [],                                  # not a string
+                        ['eh'],                              # not a string
+                        'yaaaa',                             #
+                        ['WhO -68'],                         # not a string
+                        'NAAAAAAAH $@!*',                    # NAAAAAAAAH
+                        'A'])                                  # A
+    print('Expected is:', expected)
+    print('Actual is:  ', answer)
+
 
 def big_letters(sequence_of_sequences):
     """
@@ -185,30 +199,31 @@ def big_letters(sequence_of_sequences):
     in the subsequences of the given sequence that are strings,
     in the order that they appear in the subsequences.
     For example, if the argument is:
-        [(3, 1, 4),                          # not a string
-        'Ok what is ThiSSS?',                # OTSSS
-        (10, 'Ok what is ThiSSS?', 10),      # not a string
-        [],                                  # not a string
-        ['oops'],                            # not a string
-        'oops',                              #
-        ['OOPS'],                            # not a string
-        '1 OOPS !',                          # OOPS
-        'A',                                 # A
-        'ooPS $$&*#%&&',                     # PS
-        'B',                                 # B
-        'oOpS',                              # OS
-        'C',                                 # C
-        'OoPs'                               # OP
-        'D',                                 # D
-        'OOps'                               # OO
-         ]
+                            [(3, -90, [trU]),                    # not a string
+                            'Ok what is ThiSSS?',  # OTSSS
+                            'Ok what is ThiSSS?',  # OTSSS
+                            (10, 'Ok what is ThiSSS?', 10),  # not a string
+                            [],  # not a string
+                            ['oops'],  # not a string
+                            'oops',  #
+                            ['OOPS'],  # not a string
+                            '1 OOPS !',  # OOPS
+                            'A',  # A
+                            'ooPS $$&*#%&&',  # PS
+                            'B',  # B
+                            'oOpS',  # OS
+                            'C',  # C
+                            'OoPs'  # OP
+                            'D',  # D
+                            'OOps'  # OO
+                            ])
     then this function returns:
         'OTSSSOOPSAPSBOSCOPDOO'
 
     Precondition:  the given argument is a sequence of sequences.
     """
     # -------------------------------------------------------------------------
-    # TODO: 5. Implement and test this function.
+    # done: 5. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # -------------------------------------------------------------------------
     ###########################################################################
@@ -233,9 +248,8 @@ def big_letters(sequence_of_sequences):
     list = ''
     for k in range(len(sequence_of_sequences)):
         for i in range(len(sequence_of_sequences[k])):
-            if type(sequence_of_sequences[k][i]) == str:
+            if type(sequence_of_sequences[k]) == str:
                 if sequence_of_sequences[k][i].isupper() == True:
-                    print(sequence_of_sequences[k][i])
                     list=list+(sequence_of_sequences[k][i])
     return list
 # -----------------------------------------------------------------------------
